@@ -8,13 +8,11 @@
       <el-col :span="3" class="header-right">
         <img src="../../assets/img/avatar.jpg" alt />
         <el-dropdown trigger="click">
-          <span>
-            嗷嗷棒
-          </span>
+          <span>嗷嗷棒</span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>账户信息</el-dropdown-item>
             <el-dropdown-item>git地址</el-dropdown-item>
-            <el-dropdown-item>退出</el-dropdown-item>
+            <el-dropdown-item @click.native="onLogout">退出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-col>
@@ -23,7 +21,31 @@
 </template>
 
 <script>
-export default {}
+export default {
+  methods: {
+    onLogout () {
+      this.$confirm('你确定要退出吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          window.localStorage.removeItem('user-token')
+          this.$router.push('/login')
+          this.$message({
+            type: 'success',
+            message: '退出成功!'
+          })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消退出'
+          })
+        })
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -44,7 +66,7 @@ export default {}
   align-items: center;
   img {
     border-radius: 50%;
-    margin-right:5px;
+    margin-right: 5px;
   }
 }
 </style>

@@ -72,7 +72,7 @@ export default {
           }).then(res => {
           // 存储到本地
             window.localStorage.setItem('user-token', res.data.data.token)
-            this.$router.push('/home')
+            this.$router.push('/')
           }).catch(() => {
             this.$message({
               type: 'warning',
