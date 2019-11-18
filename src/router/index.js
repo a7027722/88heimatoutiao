@@ -6,6 +6,7 @@ import home from '@/views/home'
 import article from '@/views/article'
 import NProgress from 'nprogress'
 import publish from '@/views/publish'
+import Comment from '@/views/comment'
 Vue.use(VueRouter)
 
 const routes = [
@@ -23,6 +24,15 @@ const routes = [
       },
       {
         path: '/publish',
+        component: publish
+      },
+      {
+        path: '/comment',
+        component: Comment
+      },
+      {
+        // 这是编辑页 与发布文章页共用相同组件 路由传ID即可
+        path: '/publish/:articleId',
         component: publish
       }
     ]
@@ -62,4 +72,5 @@ router.beforeEach((to, from, next) => {
 router.afterEach((to, from) => {
   NProgress.done()
 })
+
 export default router

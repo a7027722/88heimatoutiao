@@ -10,7 +10,9 @@
         </el-header>
         <!-- 首页右侧下部 -->
         <el-main>
-          <router-view></router-view>
+          <!-- 当编辑与发布文章共用相同组件时 需要切换时重新渲染
+          所以给容器一个key 避免vue复用相同组件时不再渲染 -->
+          <router-view :key="$route.path"></router-view>
         </el-main>
       </el-container>
     </el-container>
