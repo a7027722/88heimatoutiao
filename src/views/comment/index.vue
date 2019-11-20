@@ -36,8 +36,14 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="操作">
-        <el-button type="primary">修改</el-button>
+        label="操作"
+        >
+        <template slot-scope="scope">
+        <el-button
+          @click="$router.push('/comment/'+scope.row.id)"
+          type="primary"
+        >修改</el-button>
+        </template>
       </el-table-column>
     </el-table>
     <template>

@@ -38,7 +38,7 @@
         <!-- value-format设置后 v-model的输出变成一个固定格式的数组 -->
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="loadArticles(1)">查询</el-button>
+          <el-button type="primary" @click="onQuery">查询</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -80,6 +80,7 @@
       :total="totalCount"
       @current-change='onPageChange'
       :disabled='loading'
+      :current-page="page"
       ></el-pagination>
       <!-- :disabled='布尔值' 实现加载时分页器禁用的效果 -->
     </el-card>
@@ -168,6 +169,10 @@ export default {
         this.loadArticles(this.page)
       }).catch(() => {
       })
+    },
+    onQuery () {
+      this.loadArticles(1)
+      this.page = 1
     }
   },
   created () {

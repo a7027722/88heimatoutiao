@@ -7,6 +7,10 @@ import article from '@/views/article'
 import NProgress from 'nprogress'
 import publish from '@/views/publish'
 import Comment from '@/views/comment'
+import Materials from '@/views/materials'
+import Account from '@/views/account'
+import commentDetail from '@/views/comment-detail'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -31,9 +35,22 @@ const routes = [
         component: Comment
       },
       {
+        path: '/materials',
+        component: Materials
+      },
+      {
+        path: '/account',
+        component: Account
+      },
+      {
         // 这是编辑页 与发布文章页共用相同组件 路由传ID即可
         path: '/publish/:articleId',
         component: publish
+      },
+      {
+        path: '/comment/:commentId',
+        component: commentDetail,
+        props: true
       }
     ]
   },

@@ -7,6 +7,14 @@ import './styles/index.less'
 import 'nprogress/nprogress.css'
 import axios from 'axios'
 import JSONbig from 'json-bigint'
+import moment from 'moment'
+
+//  时间格式处理包 moment 全局注册过滤器 命名为dateFormat >>>在comment-detail页面应用
+//  格式可以设置成参数 并设置默认值 format = 'YYYY-MM-DD HH:mm:ss' 用时传参数以实参为准
+//  不传参数默认格式
+Vue.filter('dateFormat', value => {
+  return moment(value).format('YYYY-MM-DD HH:mm:ss')
+})
 //  引入JSONbig 解决参数id值在转化JSON格式传输时 axios请求自动把字符串转为js对象
 // js对id值长度限制导致失去精确度 id值超过了js安全证书范围无法精确表示
 // 进入该方法对data进行 JSONbig运算 用时将 数据.toString() 来获取id精确值

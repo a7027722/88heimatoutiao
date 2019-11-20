@@ -25,8 +25,13 @@
             >{{ item.name }}</el-option>
           </el-select> -->
           <!-- 封装成组件 引入 v-model 相当于 :value 和 @input两个自定义事件的合体
-              通过父子组件的通信 props down    event up 实现父子组件的数据联动 -->
-          <channel-select v-model="articleForm.channel_id"></channel-select>
+              通过父子组件的通信 props down    event up 实现父子组件的数据联动
+              在父组件里自定义一个属性include-all 设置布尔值为false 并在子组件内接受此属性 定义
+              默认为true >>> channel-select -->
+          <channel-select
+          v-model="articleForm.channel_id"
+          :include-all="false"
+          ></channel-select>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit(false)">发布文章</el-button>
