@@ -33,6 +33,28 @@
           :include-all="false"
           ></channel-select>
         </el-form-item>
+        <el-form-item label="封面">
+          <el-radio-group v-model="articleForm.cover.type">
+            <el-radio :label="1">单图</el-radio>
+            <el-radio :label="3">三图</el-radio>
+            <el-radio :label="0">无图</el-radio>
+            <el-radio :label="-1">自动</el-radio>
+          </el-radio-group>
+          <template v-if="articleForm.cover.type >= 0">
+            <el-row type="flex" :gutter="20">
+              <el-col :span="6"
+                v-for="(item, index) in articleForm.cover.type"
+                :key="item"
+              >
+              <!-- 父子组件通信 v-model相当于 自定义:value 和 @input自定义事件的合体
+                    听过props 和 $emit 实现父子通信 -->
+                <upload-image
+                  v-model="articleForm.cover.images[index]"
+                ></upload-image>
+              </el-col>
+            </el-row>
+          </template>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit(false)">发布文章</el-button>
           <el-button  @click="onSubmit(true)">存为草稿</el-button>
@@ -49,10 +71,13 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 import { quillEditor } from 'vue-quill-editor'
 import channelSelect from '@/components/channel-select'
+import uploadImage from './components/upload-image'
 export default {
+  name: 'publish',
   components: {
     quillEditor,
-    channelSelect
+    channelSelect,
+    uploadImage
   },
   data () {
     return {
@@ -61,7 +86,7 @@ export default {
         content: '', // 文章内容
         title: '', // 文章标题
         cover: {
-          type: 0, // 封面类型 -1:自动，0-无图，1-1张，3-3张
+          type: 1, // 封面类型 -1:自动，0-无图，1-1张，3-3张
           images: [] //  图片，无图就是空数组即可
         }
       }

@@ -40,6 +40,13 @@
     </el-card>
   </el-col>
 </el-row>
+  <el-pagination
+    background
+    layout="prev, pager, next"
+    :total="collectCount"
+    @current-change="onChangePage"
+  >
+  </el-pagination>
 </el-card>
   </div>
 </template>
@@ -47,25 +54,31 @@
 <script>
 const token = window.localStorage.getItem('user-token')
 export default {
+  name: 'materials',
   data () {
     return {
       images: [],
       is_all: '全部',
+      page: 1,
       updateHeaders: {
         Authorization: `Bearer ${token}`
-      }
+      },
+      collectCount: 1
     }
   },
   methods: {
-    loadImages (is_collecte = false) {
+    loadImages () {
       this.$axios({
         method: 'GET',
         url: '/user/images',
         params: {
-          collect: is_collecte
+          collect: this.is_all === '收藏',
+          page: this.page,
+          per_page: 8
         }
       }).then(res => {
-        // console.log(res.data.data)
+        console.log(res.data.data)
+        this.collectCount = res.data.data.total_count
         this.images = res.data.data.results
       })
     },
@@ -94,6 +107,10 @@ export default {
       }).then(res => {
         this.loadImages(this.is_all !== '全部')
       })
+    },
+    onChangePage (page) {
+      this.page = page
+      this.loadImages()
     }
   },
   created () {
