@@ -121,7 +121,12 @@ export default {
         },
         data: this.articleForm
       }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '添加成功'
+        })
       }).catch(() => {
+        this.$message.error('添加失败')
       })
     },
     // 在编辑进入此组件时 根据路由传过来的id 进行渲染内容
@@ -138,9 +143,11 @@ export default {
       this.$axios({
         method: 'PUT',
         url: `/articles/${this.$route.params.articleId}`,
+        // 文档中的Query参数 放在params里
         params: {
           draft
         },
+        // bady参数 放在data里
         data: this.articleForm
       }).then((res) => {
         this.$message({

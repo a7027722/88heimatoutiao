@@ -32,7 +32,7 @@
         prop="pubdate"
         label="评论日期">
         <template slot-scope="scope">
-          <!-- 全局注册设置了默认参数 可传参以传的格式为准
+          <!-- 全局注册设置了默认参数 若传参以传的参数格式为准
              {{ scope.row.pubdate | dateFormat('YYYY-MM-DD') }} -->
 
           <!-- 不传参的时候 以默认参数格式为准 -->
@@ -57,12 +57,14 @@ export default {
   },
   components: {
   },
+  // 通过在路由设置 props: true 可以获取路由上的参数
   props: {
     commentId: {
       type: String,
       required: true
     }
   },
+  // 局部设置过滤器
   // filters: {
   //   dateFormat (value) {
   //     return moment(value).format('YYYY-MM-DD HH:mm:ss')

@@ -41,6 +41,7 @@
           :http-request='onUpload'
         >
       <img width="180" :src="userData.photo" class="avatar">
+      <h3 style="fontWeight:400">请点击上传你的头像</h3>
     </el-upload>
       </el-col>
     </el-row>
@@ -87,16 +88,20 @@ export default {
           intro
         }
       }).then(res => {
-        // console.log(res)
+        // 数据是双向绑定的 视图已更新 运行到这里 数据已经存到了数据库 刷新页面 不影响
+        // 数据 页面与服务器数据已同步
         this.$message({
           type: 'success',
           message: '保存成功'
+        }).catch(() => {
+          this.$message.error('保存失败!')
         })
       })
     },
     onUpload (config) {
-      // console.log(config)
+      // 当上传方式不是post时 需要用到组件的:http-request的方法 默认参数config
       const fd = new FormData()
+      // 通过config获得图片地址 添加到实例fd中 既得到需要参数
       fd.append('photo', config.file)
       this.$axios({
         method: 'PATCH',

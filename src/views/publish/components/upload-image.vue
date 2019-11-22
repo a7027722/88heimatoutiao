@@ -32,6 +32,9 @@
                    当点击事件触发时 让索引与此属性相等 同时这个相等的条件也是触发被选中
                    高亮样式的选中条件 保存后的索引也是传参的必要条件-->
                 <img height="100" :src="item.url" class="image">
+                <div class="checked">
+                  <img src="../../../assets/img/selected.png" alt="">
+                </div>
               </el-col>
             </el-row>
           </el-card>
@@ -104,7 +107,6 @@ export default {
           per_page: 8
         }
       }).then(res => {
-        // console.log(res.data.data)
         this.image = res.data.data.results
         this.imagesCount = res.data.data.total_count
       })
@@ -135,7 +137,6 @@ export default {
     },
     onUploadPic (file) {
       this.previewImage = file.response.data.url
-      console.log(file)
     }
   }
 }
@@ -154,8 +155,22 @@ export default {
       font-size: 28px;
     }
   }
+  .checked {
+      display: none
+  }
   .image-item {
-    box-sizing: border-box;
-    border: 1px solid #0f0;
+    position: relative;
+    .checked {
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      top: -5px;
+      left: 40px;
+      display: block;
+      img {
+        width: 100px;
+        height: 100px;
+      }
+    }
   }
 </style>

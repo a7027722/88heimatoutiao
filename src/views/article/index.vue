@@ -90,6 +90,7 @@
 
 <script>
 import channelSelect from '@/components/channel-select'
+// 组件封装
 export default {
   components: {
     channelSelect
@@ -141,14 +142,13 @@ export default {
         this.articles = res.data.data.results
         this.totalCount = res.data.data.total_count
       }).catch(() => {
-
+        this.$message.error('加载失败')
       }).finally(() => {
         this.loading = false
       })
     },
     // 组件的方法 可以获取当前的页数
     onPageChange (page) {
-      // console.log(page)
       this.page = page
       this.loadArticles(page)
     },
@@ -162,12 +162,28 @@ export default {
     //   })
     // },
     onDelete (id) {
-      this.$axios({
-        method: 'DELETE',
-        url: `/articles/${id}`
-      }).then(res => {
-        this.loadArticles(this.page)
+      this.$confirm('此操作将永久删除该图片, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$axios({
+          method: 'DELETE',
+          url: `/articles/${id}`
+        }).then(res => {
+          this.loadArticles(this.page)
+          this.$message({
+            type: 'success',
+            message: '操作成功!'
+          })
+        }).catch(() => {
+          this.$message.error('操作失败!')
+        })
       }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
       })
     },
     onQuery () {

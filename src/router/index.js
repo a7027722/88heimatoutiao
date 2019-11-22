@@ -73,9 +73,10 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  // console.log(to, from, next)
+  //  开启加载效果
   NProgress.start()
   if (to.path === '/login') {
+    // 当去登录页的时候 关闭加载效果
     NProgress.done()
     return next()
   }
@@ -87,6 +88,7 @@ router.beforeEach((to, from, next) => {
   }
 })
 router.afterEach((to, from) => {
+  // 关闭加载效果
   NProgress.done()
 })
 

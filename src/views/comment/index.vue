@@ -39,6 +39,7 @@
         label="操作"
         >
         <template slot-scope="scope">
+        <!--  点击后跳转路由 并携带id 之前在路由设置参数commentId -->
         <el-button
           @click="$router.push('/comment/'+scope.row.id)"
           type="primary"
@@ -85,6 +86,7 @@ export default {
         this.commentsCount = res.data.data.total_count
         this.comments = res.data.data.results
       }).catch(() => {
+        this.$message.error('加载失败!')
       }).finally(() => {
         this.loading = false
       })
@@ -105,6 +107,8 @@ export default {
           type: 'success',
           message: `${article.comment_status ? '启用' : '关闭'}成功`
         })
+      }).catch(() => {
+        this.$message.error('操作失败!')
       })
     },
     onChangePage (page) {
